@@ -8,14 +8,17 @@ import {
 } from '../Util/constants.js';
 import OutputHandler from '../view/outputHandler.js';
 import Race from '../Model/Race.js';
+import Validation from '../Util/validation.js';
 
 export default class RaceController {
   static async playRace() {
     try {
       const firstInput = await InputHandler.read(FIRST_INPUT_COMMENT);
+      Validation.firstInput(firstInput);
 
       try {
         const secondInput = await InputHandler.read(SECOND_INPUT_COMMENT);
+        Validation.secondInput(secondInput);
         OutputHandler.print(BLANK);
         OutputHandler.print(RESULT_OUTPUT_COMMENT);
         const carNames = firstInput.split(',');
@@ -25,11 +28,11 @@ export default class RaceController {
         OutputHandler.print(`${WINNER_OUTPUT_COMMENT}${result}`);
       } catch (secondError) {
         OutputHandler.printError(secondError);
-        throw secondError;
+        throw new Error(secondError);
       }
     } catch (firstError) {
       OutputHandler.printError(firstError);
-      throw firstError;
+      throw new Error(firstError);
     }
   }
 }
