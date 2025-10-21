@@ -1,4 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
+import { ERROR_PREFIX } from '../Util/constants.js';
 
 class OutputHandler {
   static print(result) {
@@ -6,7 +7,14 @@ class OutputHandler {
   }
 
   static printError(error) {
-    Console.print(`${error}`);
+    if (!error) {
+      Console.print(ERROR_PREFIX);
+    }
+    const handleError = error;
+    if (!error.message.startsWith(ERROR_PREFIX)) {
+      handleError.message = `${ERROR_PREFIX}${error}`;
+    }
+    Console.print(`${handleError}`);
   }
 }
 

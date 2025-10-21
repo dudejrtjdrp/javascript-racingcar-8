@@ -8,11 +8,15 @@ export default class RaceController {
       const firstInput = await InputHandler.read(FIRST_INPUT_COMMENT);
       try {
         const secondInput = await InputHandler.read(SECOND_INPUT_COMMENT);
+        const result = '';
+        OutputHandler.print(result);
       } catch (error) {
-        OutputHandler.error(ERROR_PREFIX, error.message);
+        OutputHandler.printError(error);
+        throw error;
       }
     } catch (error) {
-      OutputHandler.error(ERROR_PREFIX, error.message);
+      OutputHandler.printError(error);
+      throw error;
     }
   }
 }
