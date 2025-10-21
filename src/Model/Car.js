@@ -16,7 +16,7 @@ export default class Car {
     return this.#name;
   }
 
-  getPosition() {
+  getDistance() {
     return this.#distance;
   }
 }

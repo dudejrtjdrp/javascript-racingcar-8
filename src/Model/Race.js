@@ -13,11 +13,24 @@ export default class Race {
 
   play(playCount) {
     while (this.#round < playCount) {
+      this.#cars.forEach((car) => {
+        const randomNumber = RandomNumberGenerator();
+        car.move(randomNumber);
+      });
+      OutputHandler.print(this.#cars);
       this.#round += 1;
     }
   }
 
-  calculateWinner() {}
+  calculateWinner() {
+    this.eachCarDistance = this.#cars.map((car) => {
+      car.getDistance();
+    });
+
+    const maxDistance = Math.max(...eachCarDistance); // 30
+    const winners = this.#cars.filter((car) => car.getDistance() === maxDistance);
+    return winners;
+  }
 
   set winner(winner) {
     this.#winner = winner;
