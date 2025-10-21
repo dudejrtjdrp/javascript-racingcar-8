@@ -6,17 +6,18 @@ export default class RaceController {
   static async playRace() {
     try {
       const firstInput = await InputHandler.read(FIRST_INPUT_COMMENT);
+
       try {
         const secondInput = await InputHandler.read(SECOND_INPUT_COMMENT);
-        const result = '';
+        const result = ''; // 나중에 계산 로직 추가
         OutputHandler.print(result);
-      } catch (error) {
-        OutputHandler.printError(error);
-        throw error;
+      } catch (secondError) {
+        OutputHandler.printError(secondError);
+        throw secondError;
       }
-    } catch (error) {
-      OutputHandler.printError(error);
-      throw error;
+    } catch (firstError) {
+      OutputHandler.printError(firstError);
+      throw firstError;
     }
   }
 }

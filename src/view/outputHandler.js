@@ -3,7 +3,7 @@ import { ERROR_PREFIX } from '../Util/constants.js';
 
 class OutputHandler {
   static print(result) {
-    Console.print(`${result}`);
+    Console.print(result);
   }
 
   static printError(error) {
@@ -14,7 +14,7 @@ class OutputHandler {
     if (!error.message.startsWith(ERROR_PREFIX)) {
       handleError.message = `${ERROR_PREFIX}${error}`;
     }
-    Console.print(`${handleError}`);
+    Console.print(`${handleError.message}`);
   }
 }
 
