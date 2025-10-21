@@ -1,7 +1,13 @@
 import InputHandler from '../view/inputHandler.js';
-import { FIRST_INPUT_COMMENT, SECOND_INPUT_COMMENT } from '../Util/constants.js';
+import {
+  FIRST_INPUT_COMMENT,
+  SECOND_INPUT_COMMENT,
+  RESULT_OUTPUT_COMMENT,
+  WINNER_OUTPUT_COMMENT,
+  BLANK,
+} from '../Util/constants.js';
 import OutputHandler from '../view/outputHandler.js';
-import { Race } from '../Model/Race.js';
+import Race from '../Model/Race.js';
 
 export default class RaceController {
   static async playRace() {
@@ -10,10 +16,13 @@ export default class RaceController {
 
       try {
         const secondInput = await InputHandler.read(SECOND_INPUT_COMMENT);
-        const newRace = Race(firstInput);
+        OutputHandler.print(BLANK);
+        OutputHandler.print(RESULT_OUTPUT_COMMENT);
+        const carNames = firstInput.split(',');
+        const newRace = new Race(carNames);
         newRace.play(secondInput);
-        const result = newRace.winner; // 나중에 계산 로직 추가
-        OutputHandler.print(result);
+        const result = newRace.calculateWinner(); // 나중에 계산 로직 추가
+        OutputHandler.print(`${WINNER_OUTPUT_COMMENT}${result}`);
       } catch (secondError) {
         OutputHandler.printError(secondError);
         throw secondError;

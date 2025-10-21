@@ -19,4 +19,11 @@ export default class Car {
   getDistance() {
     return this.#distance;
   }
+
+  getNameDistanceObject() {
+    const nameDistanceObject = {
+      [this.#name]: this.#distance,
+    };
+    return nameDistanceObject;
+  }
 }
