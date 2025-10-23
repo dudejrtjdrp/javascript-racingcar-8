@@ -38,9 +38,7 @@ export default class Validation {
   }
 
   static secondInput(roundCount) {
-    const regex = NUMBER_PATTERN;
-
-    const isPositiveNumber = regex.test(roundCount);
+    const isPositiveNumber = NUMBER_PATTERN.test(roundCount);
 
     if (!isPositiveNumber) {
       throw new Error(INVALID_COUNT_ERROR);

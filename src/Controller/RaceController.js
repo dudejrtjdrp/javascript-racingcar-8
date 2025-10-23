@@ -24,7 +24,7 @@ export default class RaceController {
         const carNames = firstInput.split(',');
         const newRace = new Race(carNames);
         newRace.play(secondInput);
-        const result = newRace.calculateWinner(); // 나중에 계산 로직 추가
+        const result = newRace.calculateWinner();
         OutputHandler.print(`${WINNER_OUTPUT_COMMENT}${result}`);
       } catch (secondError) {
         OutputHandler.printError(secondError);

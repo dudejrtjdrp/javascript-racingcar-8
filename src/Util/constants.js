@@ -16,4 +16,4 @@ export const EMPTY_INPUT_ERROR = `${ERROR_PREFIX} 입력값이 비어있습니�
 
 export const NUMBER_PATTERN = /^[1-9]\d*$/;
 export const ENGLISH_KOREAN_PATTERN = '^[0-9a-zA-Zㄱ-ㅎ가-힣]*$';
-export const DEFAULT_INPUT_PATTERN = '^[a-zA-Z]+(,[a-zA-Z]+)*$';
+export const DEFAULT_INPUT_PATTERN = '^[0-9a-zA-Zㄱ-ㅎ가-힣]+(,[0-9a-zA-Zㄱ-ㅎ가-힣]+)*$';
