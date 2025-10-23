@@ -16,23 +16,25 @@ export default class RaceController {
       const firstInput = await InputHandler.read(FIRST_INPUT_COMMENT);
       Validation.firstInput(firstInput);
 
-      try {
-        const secondInput = await InputHandler.read(SECOND_INPUT_COMMENT);
-        Validation.secondInput(secondInput);
-        OutputHandler.print(BLANK);
-        OutputHandler.print(RESULT_OUTPUT_COMMENT);
-        const carNames = firstInput.split(',');
-        const newRace = new Race(carNames);
-        newRace.play(secondInput);
-        const result = newRace.calculateWinner();
-        OutputHandler.print(`${WINNER_OUTPUT_COMMENT}${result}`);
-      } catch (secondError) {
-        OutputHandler.printError(secondError);
-        throw new Error(secondError);
-      }
-    } catch (firstError) {
-      OutputHandler.printError(firstError);
-      throw new Error(firstError);
+      await this.#handleSecondInput(firstInput);
+    } catch (error) {
+      OutputHandler.printError(error);
+      throw error;
     }
+  }
+
+  static async #handleSecondInput(firstInput) {
+    const secondInput = await InputHandler.read(SECOND_INPUT_COMMENT);
+    Validation.secondInput(secondInput);
+
+    OutputHandler.print(BLANK);
+    OutputHandler.print(RESULT_OUTPUT_COMMENT);
+
+    const carNames = firstInput.split(',');
+    const newRace = new Race(carNames);
+    newRace.play(secondInput);
+
+    const result = newRace.calculateWinner();
+    OutputHandler.print(`${WINNER_OUTPUT_COMMENT}${result}`);
   }
 }
