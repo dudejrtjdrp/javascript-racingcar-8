@@ -11,35 +11,41 @@ import {
 
 export default class Validation {
   static firstInput(carNamesString) {
-    const isEmptyString = !carNamesString;
-    if (isEmptyString) {
-      throw new Error(EMPTY_INPUT_ERROR);
-    }
-
-    const isStringPattern = !carNamesString.match(DEFAULT_INPUT_PATTERN);
-    if (isStringPattern) {
-      throw new Error(INVALID_FORMAT_ERROR);
-    }
+    this.#validateEmpty(carNamesString);
+    this.#validateFormat(carNamesString);
 
     const carNamesArray = carNamesString.split(',');
-    for (let i = 0; i < carNamesArray.length; i += 1) {
-      const carName = carNamesArray[i];
+    carNamesArray.forEach((carName) => this.#validateCarName(carName));
+  }
 
-      const isCarNameLength = carName.length <= 0 || carName.length > 5;
-      if (isCarNameLength) {
-        throw new Error(INVALID_NAME_COUNT_ERROR);
-      }
+  static #validateEmpty(carNamesString) {
+    if (!carNamesString) throw new Error(EMPTY_INPUT_ERROR);
+  }
 
-      const isCarNameLetter = !carName.match(ENGLISH_KOREAN_PATTERN);
-      if (isCarNameLetter) {
-        throw new Error(INVALID_NAME_ERROR);
-      }
+  static #validateFormat(carNamesString) {
+    if (!carNamesString.match(DEFAULT_INPUT_PATTERN)) {
+      throw new Error(INVALID_FORMAT_ERROR);
+    }
+  }
+
+  static #validateCarName(carName) {
+    this.#validateCarNameLength(carName);
+    this.#validateCarNameLetter(carName);
+  }
+
+  static #validateCarNameLength(carName) {
+    const invalidLength = carName.length <= 0 || carName.length > 5;
+    if (invalidLength) throw new Error(INVALID_NAME_COUNT_ERROR);
+  }
+
+  static #validateCarNameLetter(carName) {
+    if (!carName.match(ENGLISH_KOREAN_PATTERN)) {
+      throw new Error(INVALID_NAME_ERROR);
     }
   }
 
   static secondInput(roundCount) {
     const isPositiveNumber = NUMBER_PATTERN.test(roundCount);
-
     if (!isPositiveNumber) {
       throw new Error(INVALID_COUNT_ERROR);
     }
