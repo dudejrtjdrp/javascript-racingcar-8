@@ -15,34 +15,34 @@ export default class Race {
 
   play(playCount) {
     while (this.#round < playCount) {
-      this.#cars.forEach((car) => {
-        const randomNumber = RandomNumberGenerator.generate();
-        car.move(randomNumber);
-
-        const convertResult = ReplaceObjectString.convert(car.getNameDistanceObject());
-        OutputHandler.print(convertResult);
-      });
+      this.#cars.forEach((car) => this.#playCar(car));
       OutputHandler.print(BLANK);
       this.#round += 1;
     }
   }
 
+  #playCar(car) {
+    const randomNumber = RandomNumberGenerator.generate();
+    car.move(randomNumber);
+
+    const convertResult = ReplaceObjectString.convert(car.getNameDistanceObject());
+    OutputHandler.print(convertResult);
+  }
+
   calculateWinner() {
-    const eachCarDistance = this.#cars.map((car) => {
-      return car.getDistance();
-    });
-    const maxDistance = Math.max(...eachCarDistance); // 30
-    let winners = '';
-    this.#cars.map((car) => {
-      if (car.getDistance() === maxDistance) {
-        const carData = car.getNameDistanceObject();
-        const convertCarData = ReplaceObjectString.replace(carData);
-        winners = winners.concat(`${convertCarData[0]}, `);
-        return convertCarData[0];
-      }
-    });
-    const result = winners.slice(0, -2);
-    return result;
+    const maxDistance = this.#getMaxDistance();
+    return this.#getWinnersByDistance(maxDistance);
+  }
+
+  #getMaxDistance() {
+    return Math.max(...this.#cars.map((car) => car.getDistance()));
+  }
+
+  #getWinnersByDistance(maxDistance) {
+    const winners = this.#cars
+      .filter((car) => car.getDistance() === maxDistance)
+      .map((car) => ReplaceObjectString.replace(car.getNameDistanceObject())[0]);
+    return winners.join(', ');
   }
 
   set winner(winner) {
